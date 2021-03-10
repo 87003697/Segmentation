@@ -18,8 +18,10 @@
   - [Acknowledgement](#acknowledgement)
 
 <!-- /TOC -->
+## Added Information
+This is the repo for EECS 6691 course presentation, it contains a PyTorch implementation of different semantic segmentation models for different datasets. Apart from original implementation, there are some modifications on the code, a Bug is fixed when the dataloader comes across gray-scale images.
 
-This repo contains a PyTorch an implementation of different semantic segmentation models for different datasets.
+For any question, please contact *Zhiyuan Ma* zm2354, *Jessie Ye* jy3114
 
 ## Requirements
 PyTorch and Torchvision needs to be installed before running the scripts, together with `PIL` and `opencv` for data-preprocessing and `tqdm` for showing the training progress. PyTorch v1.1 is supported (using the new supported tensoboard); can work with ealier versions, but instead of using tensoboard, use tensoboardX.
