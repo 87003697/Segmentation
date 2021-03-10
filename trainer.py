@@ -8,6 +8,7 @@ from base import BaseTrainer, DataPrefetcher
 from utils.helpers import colorize_mask
 from utils.metrics import eval_metrics, AverageMeter
 from tqdm import tqdm
+import pdb
 
 class Trainer(BaseTrainer):
     def __init__(self, model, loss, resume, config, train_loader, val_loader=None, train_logger=None, prefetch=True):
@@ -48,9 +49,7 @@ class Trainer(BaseTrainer):
         tbar = tqdm(self.train_loader, ncols=130)
         for batch_idx, (data, target) in enumerate(tbar):
             self.data_time.update(time.time() - tic)
-            #data, target = data.to(self.device), target.to(self.device)
-            self.lr_scheduler.step(epoch=epoch-1)
-
+            # data, target = data.to(self.device), target.to(self.device) # should it be commented ? Zhiyuan
             # LOSS & OPTIMIZE
             self.optimizer.zero_grad()
             output = self.model(data)
@@ -63,13 +62,17 @@ class Trainer(BaseTrainer):
             else:
                 assert output.size()[2:] == target.size()[1:]
                 assert output.size()[1] == self.num_classes 
-                loss = self.loss(output, target)
+                loss = self.loss(output, target) # here it's wrong!
 
             if isinstance(self.loss, torch.nn.DataParallel):
                 loss = loss.mean()
+
             loss.backward()
             self.optimizer.step()
             self.total_loss.update(loss.item())
+
+            self.lr_scheduler.step(epoch=epoch-1) # in a warning, this line should be after optimizer.step()
+
 
             # measure elapsed time
             self.batch_time.update(time.time() - tic)

@@ -6,6 +6,7 @@ from torch.utils.data import Dataset
 from PIL import Image
 from torchvision import transforms
 from scipy import ndimage
+import pdb
 
 class BaseDataSet(Dataset):
     def __init__(self, root, split, mean, std, base_size=None, augment=True, val=False,
@@ -61,7 +62,11 @@ class BaseDataSet(Dataset):
         return image, label
 
     def _augmentation(self, image, label):
-        h, w, _ = image.shape
+        try:
+            h, w, _ = image.shape
+        except: # the image is gray-scale
+            image = np.concatenate([image[...,np.newaxis]] * 3, axis= -1)
+            h, w, _ = image.shape
         # Scaling, we set the bigger to base size, and the smaller 
         # one is rescaled to maintain the same ratio, if we don't have any obj in the image, re-do the processing
         if self.base_size:

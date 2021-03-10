@@ -10,6 +10,7 @@ from utils import palette
 import torch
 import os
 import cv2
+import pdb
 
 class CocoStuff10k(BaseDataSet):
     def __init__(self, warp_image = True, **kwargs):
@@ -55,6 +56,7 @@ class CocoStuff164k(BaseDataSet):
         label_path = os.path.join(self.root, 'annotations', self.split, image_id + '.png')
         image = np.asarray(Image.open(image_path).convert('RGB'), dtype=np.float32)
         label = cv2.imread(label_path, cv2.IMREAD_GRAYSCALE)
+        pdb.set_trace()
         return image, label, image_id
 
 def get_parent_class(value, dictionary):
@@ -70,7 +72,7 @@ def get_parent_class(value, dictionary):
                     yield res
 
 class COCO(BaseDataLoader):
-    def __init__(self, data_dir, batch_size, split, crop_size=None, base_size=None, scale=True, num_workers=1, partition = 'CocoStuff164k',
+    def __init__(self, data_dir, batch_size, split, crop_size=None, base_size=None, scale=True, num_workers=1, partition = 'CocoStuff10k',
                     shuffle=False, flip=False, rotate=False, blur= False, augment=False, val_split= None, return_id=False, val=False):
 
         self.MEAN = [0.43931922, 0.41310471, 0.37480941]
@@ -91,7 +93,6 @@ class COCO(BaseDataLoader):
             'return_id': return_id,
             'val': val
         }
-
         if partition == 'CocoStuff10k': self.dataset = CocoStuff10k(**kwargs)
         elif partition == 'CocoStuff164k': self.dataset = CocoStuff164k(**kwargs)
         else: raise ValueError(f"Please choose either CocoStuff10k / CocoStuff164k")

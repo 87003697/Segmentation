@@ -16,6 +16,7 @@ import dataloaders
 import models
 from utils.helpers import colorize_mask
 from collections import OrderedDict
+import pdb
 
 def pad_image(img, target_size):
     rows_to_pad = max(target_size[0] - img.shape[2], 0)
@@ -84,7 +85,9 @@ def save_images(image, mask, output_path, image_file, palette):
     w, h = image.size
     image_file = os.path.basename(image_file).split('.')[0]
     colorized_mask = colorize_mask(mask, palette)
-    colorized_mask.save(os.path.join(output_path, image_file+'.png'))
+    colorized_mask.save(os.path.join(output_path, image_file+'_mask.png'))
+    image.save(os.path.join(output_path, image_file+'_orig.png'))
+
     # output_im = Image.new('RGB', (w*2, h))
     # output_im.paste(image, (0,0))
     # output_im.paste(colorized_mask, (w,0))
