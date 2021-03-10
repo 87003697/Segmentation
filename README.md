@@ -18,10 +18,19 @@
   - [Acknowledgement](#acknowledgement)
 
 <!-- /TOC -->
-## Added Information
+## Notice
 This is the repo for EECS 6691 course presentation, it contains a PyTorch implementation of different semantic segmentation models for different datasets. Apart from original implementation, there are some modifications on the code, a Bug is fixed when the dataloader comes across gray-scale images.
 
-For any question, please contact *Zhiyuan Ma* zm2354, *Jessie Ye* jy3114
+Experiment is tested on **FCN** and **CocoStuff10k** dataset. Due to time constraints, the model is not trained well, but the result is promising⬇️.
+
+Raw Image             |  Model Prediction
+:-------------------------:|:-------------------------:
+![](https://github.com/87003697/Segmentation/blob/main/outputs/COCO_train2014_000000000113_orig.png)  |  ![](https://github.com/87003697/Segmentation/blob/main/outputs/COCO_train2014_000000000113_mask.png)
+
+For any question, please contact *Zhiyuan Ma* zm2354, *Jessie Ye* jy3114.
+
+
+The following is the original readme.
 
 ## Requirements
 PyTorch and Torchvision needs to be installed before running the scripts, together with `PIL` and `opencv` for data-preprocessing and `tqdm` for showing the training progress. PyTorch v1.1 is supported (using the new supported tensoboard); can work with ealier versions, but instead of using tensoboard, use tensoboardX.
